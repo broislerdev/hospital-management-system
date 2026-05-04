@@ -64,19 +64,64 @@ def patients_menu():
 
         elif option == '2':
             patient_id = input('Enter the ID to remove the patient:')
-            hospital.remove_patient(patient_id)
+            patient = hospital.get_patient(patient_id)
+            hospital.remove_patient(patient)
             print('Patient Removed')
 
         elif option == '3':
             patient_id = input('Enter the ID to search for the patient: ')
-            hospital.get_patient(patient_id)
+            patient =  hospital.get_patient(patient_id)
             print(patient)
 
         elif option == '4':
-            pass
+            for patient in hospital.list_patients().values():
+                print(patient)
 
         elif option == '0':
             return
+
+def doctors_menu():
+    print("  ┌─────────────────────────────────┐")
+    print("  │         DOCTORS MENU            │")
+    print("  ├─────────────────────────────────┤")
+    print("  │  [1]  Add Doctor                │")
+    print("  │  [2]  Remove Doctor             │")
+    print("  │  [3]  Search Doctor             │")
+    print("  │  [4]  List Doctor               │")
+    print("  │  [0]  Exit                      │")
+    print("  └─────────────────────────────────┘")
+
+    while True:
+        option = input("\n  Select an option: ")
+
+        if option == '1':
+            doctor_id = input('ID: ')
+            name = input('Name: ')
+            specialty = input('Specialty:')
+            crm = input('CRM:')
+            doctor = Doctor(doctor_id, name, specialty, crm)
+            hospital.add_doctor(doctor)
+            print('Doctor added!')
+
+        elif option == '2':
+            doctor_id = input('Enter the ID to remove the Doctor:')
+            doctor = hospital.get_doctor(doctor_id)
+            hospital.remove_doctor(doctor)
+            print('Doctor Removed')
+
+        elif option == '3':
+            doctor_id = input('Enter the ID to search for the Doctor: ')
+            doctor =  hospital.get_doctor(doctor_id)
+            print(doctor)
+
+        elif option == '4':
+            for doctor in hospital.list_doctor().values():
+                print(doctor)
+
+        elif option == '0':
+            return
+
+
 
 
 while True:
@@ -86,7 +131,7 @@ while True:
     if option == '1':
         patients_menu()
     elif option == '2':
-        pass  # menu de médicos
+        doctors_menu()
     elif option == '3':
         pass  # menu de consultas
     elif option == '0':
