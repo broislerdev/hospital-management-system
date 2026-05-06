@@ -5,13 +5,19 @@ class Hospital:
         self.appointment_dict = {}
 
     def add_patient(self, patient):
-        self.patients_dict[patient.patient_id] = patient
-
+        patient_id = len(self.patients_dict) + 1
+        patient.patient_id = patient_id
+        self.patients_dict[patient_id] = patient
+        
     def add_doctor(self, doctor):
-        self.doctor_dict[doctor.doctor_id] = doctor
+        doctor_id = len(self.appointment_dict) + 1
+        doctor.doctor_id = doctor_id
+        self.doctor_dict[doctor_id] = doctor
 
     def add_appointment(self, appointment):
-        self.appointment_dict[appointment.appoint_id] = appointment
+        appoint_id = len(self.appointment_dict) + 1
+        appointment.appoint_id = appoint_id
+        self.appointment_dict[appoint_id] = appointment
 
     def remove_patient(self, patient):
         del self.patients_dict[patient.patient_id]

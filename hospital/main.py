@@ -37,7 +37,6 @@ def show_menu():
     print("  └─────────────────────────────┘")
 
 
-
 def patients_menu():
     print("  ┌─────────────────────────────────┐")
     print("  │         PATIENTS MENU           │")
@@ -53,24 +52,22 @@ def patients_menu():
         option = input("\n  Select an option: ")
 
         if option == '1':
-            patient_id = input('ID: ')
             name = input('Name: ')
             age = int(input('Age: '))
-            cpf = input('CPF:')
             phone = input('Phone: ')
-            patient = Patient(patient_id, name, age, cpf, phone)
+            patient = Patient(None, name, age, phone)
             hospital.add_patient(patient)
             print('Patient added!')
 
         elif option == '2':
-            patient_id = input('Enter the ID to remove the patient:')
+            patient_id = int(input('Enter the ID to remove the patient:'))
             patient = hospital.get_patient(patient_id)
             hospital.remove_patient(patient)
             print('Patient Removed')
 
         elif option == '3':
-            patient_id = input('Enter the ID to search for the patient: ')
-            patient =  hospital.get_patient(patient_id)
+            patient_id = int(input('Enter the ID to search for the patient: '))
+            patient = hospital.get_patient(patient_id)
             print(patient)
 
         elif option == '4':
@@ -95,23 +92,22 @@ def doctors_menu():
         option = input("\n  Select an option: ")
 
         if option == '1':
-            doctor_id = input('ID: ')
             name = input('Name: ')
             specialty = input('Specialty:')
             crm = input('CRM:')
-            doctor = Doctor(doctor_id, name, specialty, crm)
+            doctor = Doctor(None, name, specialty, crm)
             hospital.add_doctor(doctor)
             print('Doctor added!')
 
         elif option == '2':
-            doctor_id = input('Enter the ID to remove the Doctor:')
+            doctor_id = int(input('Enter the ID to remove the Doctor:'))
             doctor = hospital.get_doctor(doctor_id)
             hospital.remove_doctor(doctor)
             print('Doctor Removed')
 
         elif option == '3':
-            doctor_id = input('Enter the ID to search for the Doctor: ')
-            doctor =  hospital.get_doctor(doctor_id)
+            doctor_id = int(input('Enter the ID to search for the Doctor: '))
+            doctor = hospital.get_doctor(doctor_id)
             print(doctor)
 
         elif option == '4':
@@ -121,6 +117,64 @@ def doctors_menu():
         elif option == '0':
             return
 
+
+def appointments_menu():
+    print("  ┌─────────────────────────────────┐")
+    print("  │         APPOINTMENTS MENU       │")
+    print("  ├─────────────────────────────────┤")
+    print("  │  [1]  Schedule                  │")
+    print("  │  [2]  List by Patient           │")
+    print("  │  [3]  List by Doctors           │")
+    print("  │  [4]  Cancel Appointments       │")
+    print("  │  [0]  Exit                      │")
+    print("  └─────────────────────────────────┘")
+
+    while True:
+        option = input("\n  Select an option: ")
+
+        if option == '1':
+
+            for patient in hospital.list_patients().values():
+                print(f'Patient List \n{patient}')
+            patient_id = int(input('Select a patient by ID: '))
+            hospital.get_patient(patient_id)
+            for doctor in hospital.list_doctor().values():
+                print(f'Doctor List \n{doctor}')
+            doctor_id = int(input('Select a doctor by ID: '))
+            hospital.get_doctor(doctor_id)
+            date = input('Enter a date that will be available for viewing: ')
+            hour = input('\n Enter the time you be available that day: ')
+            reason = input('\n Reason for the appointment: ')
+            appointments = Appointment(None, patient_id, doctor_id, date, hour, reason)
+            hospital.add_appointment(appointments)
+            print('Scheduling complete!')
+
+        elif option == '2':
+            patient_id = int(input('Enter patient ID: '))
+            for appointment in hospital.list_appointment().values():
+                if appointment.patient_id == patient_id:
+                    print(appointment)
+
+        elif option == '3':
+            doctor_id = int(input('Enter doctor ID: '))
+            for appointment in hospital.list_appointment().values():
+                if appointment.doctor_id == doctor_id:
+                    print(appointment)
+
+        elif option == '4':
+            for appointment in hospital.list_appointment().values():
+                print(appointment)
+            appointment_id = int(input('Enter appointment ID to cancel: '))
+            confirm = input('Would you like to cancel the appointment? (y/n): ')
+            if confirm == 'y':
+                appointment = hospital.get_appointment(appointment_id)
+                if appointment is None:
+                    print('Appointment not found!')
+                else:
+                    hospital.remove_appointment(appointment)
+                    print('Appointment canceled!')
+            else:
+                print('Cancellation aborted!')
 
 
 
@@ -133,7 +187,7 @@ while True:
     elif option == '2':
         doctors_menu()
     elif option == '3':
-        pass  # menu de consultas
+        appointments_menu()
     elif option == '0':
         print("\n  Goodbye!")
         break
