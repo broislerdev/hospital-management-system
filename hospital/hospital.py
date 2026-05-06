@@ -45,3 +45,10 @@ class Hospital:
 
     def get_appointment(self, appoint_id):
         return self.appointment_dict.get(appoint_id)
+
+    def to_dict(self):
+        return {
+            "patients": [v.to_dict() for v in self.patients_dict.values()],
+            "doctors": [v.to_dict() for v in self.doctor_dict.values()],
+            "appointments": [v.to_dict() for v in self.appointment_dict.values()],
+        }

@@ -1,3 +1,4 @@
+import json
 import time
 import os
 from models import Patient, Doctor, Appointment
@@ -176,22 +177,30 @@ def appointments_menu():
             else:
                 print('Cancellation aborted!')
 
+def persist_database():
+    with open('hospital_data.json', 'w') as file:
+        hospital_dictionary = hospital.to_dict()
+        file.write(json.dumps(hospital_dictionary, indent=2))
 
+if __name__ == '__main__':
+    try:
+        while True:
+            show_menu()
+            option = input("\n  Select an option: ")
 
-while True:
-    show_menu()
-    option = input("\n  Select an option: ")
-
-    if option == '1':
-        patients_menu()
-    elif option == '2':
-        doctors_menu()
-    elif option == '3':
-        appointments_menu()
-    elif option == '0':
-        print("\n  Goodbye!")
-        break
-    else:
-        print("\n  Invalid option. Try again.")
-        time.sleep(1)
-        os.system('cls')
+            if option == '1':
+                patients_menu()
+            elif option == '2':
+                doctors_menu()
+            elif option == '3':
+                appointments_menu()
+            elif option == '0':
+                print("\n  Goodbye!")
+                break
+            else:
+                print("\n  Invalid option. Try again.")
+                time.sleep(1)
+                os.system('cls')
+    finally:
+        print("Closing the application, saving data to disk...")
+        persist_database()
