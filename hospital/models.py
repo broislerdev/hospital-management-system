@@ -11,7 +11,7 @@ class Patient:
                 f'\nAge: {self.age}'
                 f'\nPhone: {self.phone}')
 
-    #def to_dict(self):
+    def to_dict(self):
         return {
             "patient_id": self.patient_id,
             "name": self.name,
@@ -34,7 +34,7 @@ class Doctor:
                 f'\nSpecialty: {self.specialty}'
                 f'\nCrm: {self.crm}')
 
-    #def to_dict(self):
+    def to_dict(self):
         return {
             "doctor_id": self.doctor_id,
             "name": self.name,
@@ -60,7 +60,7 @@ class Appointment:
                 f'\nTime: {self.hour}'
                 f'\nReason: {self.reason}')
 
-    #def to_dict(self):
+    def to_dict(self):
         return {
             'appointment_id': self.appoint_id,
             'patient_id': self.patient_id,
