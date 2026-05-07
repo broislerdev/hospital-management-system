@@ -10,7 +10,7 @@ class Hospital:
         self.patients_dict[patient_id] = patient
         
     def add_doctor(self, doctor):
-        doctor_id = len(self.appointment_dict) + 1
+        doctor_id = len(self.doctor_dict) + 1
         doctor.doctor_id = doctor_id
         self.doctor_dict[doctor_id] = doctor
 

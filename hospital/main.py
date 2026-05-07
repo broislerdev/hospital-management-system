@@ -4,6 +4,8 @@ import os
 from models import Patient, Doctor, Appointment
 from hospital import Hospital
 
+
+
 print(r"""
  ███╗   ███╗ ███████╗ ██████╗  ███████╗ ██╗   ██╗ ███████╗ ████████╗ ███████╗ ███╗   ███╗
  ████╗ ████║ ██╔════╝ ██╔══██╗ ██╔════╝ ╚██╗ ██╔╝ ██╔════╝ ╚══██╔══╝ ██╔════╝ ████╗ ████║
@@ -19,6 +21,8 @@ os.system('cls')
 
 hospital = Hospital()
 
+
+
 def show_menu():
     print(r"""
  ███╗   ███╗ ███████╗ ██████╗  ███████╗ ██╗   ██╗ ███████╗ ████████╗ ███████╗ ███╗   ███╗
@@ -28,6 +32,7 @@ def show_menu():
  ██║ ╚═╝ ██║ ███████╗ ██████╔╝ ███████║    ██║    ███████║    ██║    ███████╗ ██║ ╚═╝ ██║
  ╚═╝     ╚═╝ ╚══════╝ ╚═════╝  ╚══════╝    ╚═╝    ╚══════╝    ╚═╝    ╚══════╝ ╚═╝     ╚═╝
 """)
+
     print("  ┌─────────────────────────────┐")
     print("  │         MAIN MENU           │")
     print("  ├─────────────────────────────┤")
@@ -176,15 +181,33 @@ def appointments_menu():
                     print('Appointment canceled!')
             else:
                 print('Cancellation aborted!')
+        elif option == '0':
+            return
 
 def persist_database():
     with open('hospital_data.json', 'w') as file:
         hospital_dictionary = hospital.to_dict()
         file.write(json.dumps(hospital_dictionary, indent=2))
 
+def load_database():
+    if os.path.exists('hospital_data.json') and os.path.getsize('hospital_data.json') > 0:
+        with open('hospital_data.json', 'r') as file:
+            data = json.loads(file.read())
+            for patient_data in data['patients']:
+                patient = Patient(**patient_data)
+                hospital.add_patient(patient)
+            for doctor_data in data['doctors']:
+                doctor = Doctor(**doctor_data)
+                hospital.add_doctor(doctor)
+            for appointments_data in data['appointments']:
+                appointments = Appointment(**appointments_data)
+                hospital.add_appointment(appointments)
+
+
 if __name__ == '__main__':
     try:
         while True:
+            load_database()
             show_menu()
             option = input("\n  Select an option: ")
 
