@@ -59,20 +59,32 @@ def patients_menu():
 
         if option == '1':
             name = input('Name: ')
-            age = int(input('Age: '))
+            try:
+                age = int(input('Age: '))
+            except ValueError:
+                print('Invalid age! Please enter a number.')
+                continue
             phone = input('Phone: ')
             patient = Patient(None, name, age, phone)
             hospital.add_patient(patient)
             print('Patient added!')
 
         elif option == '2':
-            patient_id = int(input('Enter the ID to remove the patient:'))
+            try:
+                patient_id = int(input('Enter the ID to remove the patient:'))
+            except ValueError:
+                print('Invalid ID! Please try again')
+                continue
             patient = hospital.get_patient(patient_id)
             hospital.remove_patient(patient)
             print('Patient Removed')
 
         elif option == '3':
-            patient_id = int(input('Enter the ID to search for the patient: '))
+            try:
+                patient_id = int(input('Enter the ID to search for the patient: '))
+            except ValueError:
+                print('Invalid ID! Please try again')
+                continue
             patient = hospital.get_patient(patient_id)
             print(patient)
 
@@ -102,17 +114,27 @@ def doctors_menu():
             specialty = input('Specialty:')
             crm = input('CRM:')
             doctor = Doctor(None, name, specialty, crm)
-            hospital.add_doctor(doctor)
-            print('Doctor added!')
+            if hospital.add_doctor(doctor):
+                print('Doctor added!')
+            else:
+               print('Doctor with this CRM already exists!')
 
         elif option == '2':
-            doctor_id = int(input('Enter the ID to remove the Doctor:'))
+            try:
+                doctor_id = int(input('Enter the ID to remove the Doctor:'))
+            except ValueError:
+                print('Invalid ID! Please try again')
+                continue
             doctor = hospital.get_doctor(doctor_id)
             hospital.remove_doctor(doctor)
             print('Doctor Removed')
 
         elif option == '3':
-            doctor_id = int(input('Enter the ID to search for the Doctor: '))
+            try:
+                doctor_id = int(input('Enter the ID to search for the Doctor: '))
+            except ValueError:
+                print('Invalid ID! Please try again')
+                continue
             doctor = hospital.get_doctor(doctor_id)
             print(doctor)
 
@@ -142,11 +164,19 @@ def appointments_menu():
 
             for patient in hospital.list_patients().values():
                 print(f'Patient List \n{patient}')
-            patient_id = int(input('Select a patient by ID: '))
+            try:
+                patient_id = int(input('Select a patient by ID: '))
+            except ValueError:
+                print('Invalid ID! Please try again')
+                continue
             hospital.get_patient(patient_id)
             for doctor in hospital.list_doctor().values():
                 print(f'Doctor List \n{doctor}')
-            doctor_id = int(input('Select a doctor by ID: '))
+            try:
+                doctor_id = int(input('Select a doctor by ID: '))
+            except ValueError:
+                print('Invalid ID! Please try again')
+                continue
             hospital.get_doctor(doctor_id)
             date = input('Enter a date that will be available for viewing: ')
             hour = input('\n Enter the time you be available that day: ')
@@ -156,13 +186,21 @@ def appointments_menu():
             print('Scheduling complete!')
 
         elif option == '2':
-            patient_id = int(input('Enter patient ID: '))
+            try:
+                patient_id = int(input('Enter patient ID: '))
+            except ValueError:
+                print('Invalid ID! Please try again')
+                continue
             for appointment in hospital.list_appointment().values():
                 if appointment.patient_id == patient_id:
                     print(appointment)
 
         elif option == '3':
-            doctor_id = int(input('Enter doctor ID: '))
+            try:
+                doctor_id = int(input('Enter doctor ID: '))
+            except ValueError:
+                print('Invalid ID! Please try again')
+                continue
             for appointment in hospital.list_appointment().values():
                 if appointment.doctor_id == doctor_id:
                     print(appointment)
@@ -170,7 +208,11 @@ def appointments_menu():
         elif option == '4':
             for appointment in hospital.list_appointment().values():
                 print(appointment)
-            appointment_id = int(input('Enter appointment ID to cancel: '))
+            try:
+                appointment_id = int(input('Enter appointment ID to cancel: '))
+            except ValueError:
+                print('Invalid ID! Please try again')
+                continue
             confirm = input('Would you like to cancel the appointment? (y/n): ')
             if confirm == 'y':
                 appointment = hospital.get_appointment(appointment_id)
@@ -205,9 +247,9 @@ def load_database():
 
 
 if __name__ == '__main__':
+    load_database()
     try:
         while True:
-            load_database()
             show_menu()
             option = input("\n  Select an option: ")
 

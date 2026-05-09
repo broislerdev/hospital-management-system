@@ -8,11 +8,15 @@ class Hospital:
         patient_id = len(self.patients_dict) + 1
         patient.patient_id = patient_id
         self.patients_dict[patient_id] = patient
-        
+
     def add_doctor(self, doctor):
+        for existing_doctor in self.doctor_dict.values():
+            if existing_doctor.crm == doctor.crm:
+                return False
         doctor_id = len(self.doctor_dict) + 1
         doctor.doctor_id = doctor_id
         self.doctor_dict[doctor_id] = doctor
+        return True
 
     def add_appointment(self, appointment):
         appoint_id = len(self.appointment_dict) + 1
