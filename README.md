@@ -6,17 +6,21 @@
 
 A CLI-based hospital management system built with Python and OOP principles. Manage patients, doctors, and appointments directly from the terminal — with persistent data storage using JSON.
 
------
+
 
 ## 🚀 How to run
 
 Make sure you have Python installed, then run in your terminal:
 
+
+
+
+
 ```
 py main.py
 ```
 
------
+
 
 ## 🕹️ Features
 
@@ -26,7 +30,7 @@ py main.py
 - 💾 **Persistence** — data is automatically saved to a JSON file on exit and loaded on startup
 - 🛡️ **Input validation** — handles invalid inputs with try/except blocks
 
------
+
 
 ## 🗂️ Project Structure
 
@@ -39,7 +43,7 @@ hospital-management-system/
 └── README.md
 ```
 
------
+
 
 ## 🧠 Concepts applied
 
@@ -49,7 +53,7 @@ hospital-management-system/
 - Error handling with try/except
 - Data persistence
 
------
+
 
 ## 🛠️ Built with
 
