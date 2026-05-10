@@ -14,7 +14,9 @@ Make sure you have Python installed, then run in your terminal:
 
 
 
-
+```
+cd hospital
+```
 
 ```
 py main.py
